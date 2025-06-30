@@ -4,6 +4,7 @@ namespace App\Livewire\Roles;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -32,17 +33,23 @@ class Index extends Component
 
     private function initializePermissions()
     {
-        $modules = ['posts', 'pages', 'categories'];
+        $modules = ['posts', 'pages', 'categories', 'media_manager'];
         $actions = ['view', 'create', 'edit', 'delete'];
 
         $this->permissionGroups = collect($modules)->map(function ($module) use ($actions) {
             return [
-                'name' => ucfirst($module),
+                'name' => Str::title(str_replace('_', ' ', $module)),
                 'permissions' => collect($actions)->map(function ($action) use ($module) {
                     return "{$action} {$module}";
                 })->all()
             ];
         })->all();
+    }
+
+    public function showCreateModal()
+    {
+        $this->resetForm();
+        $this->isModalOpen = true;
     }
 
     public function render()

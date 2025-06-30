@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\MediaManager;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
@@ -22,6 +23,9 @@ class Index extends Component
     public $categories = [];
     public $selectedCategories = [];
 
+    public $selectedImageFromMedia;
+    public $mediaImages = [];
+
     public $search = '';
     public $statusFilter = '';
     public $sortField = 'created_at';
@@ -29,14 +33,11 @@ class Index extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount()
-    {
-        $this->authorize('view posts');
-        $this->categories = Category::all();
-    }
-
     public function render()
     {
+        $this->authorize('view posts');
+        $this->mediaImages = MediaManager::all();
+        $this->categories = Category::all();
         $query = Post::with('categories');
 
         if ($this->search) {
@@ -107,13 +108,16 @@ class Index extends Component
         ]);
 
         $imageUrl = $this->image;
-
-        if ($this->imageFile) {
+        if ($this->selectedImageFromMedia) {
+            $this->image = $this->selectedImageFromMedia;
+            $imageUrl = $this->image;
+        } elseif ($this->imageFile) {
             if ($this->postId && $this->image) {
                 Storage::disk('public')->delete(str_replace('/storage/', '', $this->image));
             }
             $path = $this->imageFile->store('posts', 'public');
             $imageUrl = Storage::disk('public')->url($path);
+            $this->image = $imageUrl;
         }
 
         $postData = [

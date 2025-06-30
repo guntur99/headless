@@ -19,7 +19,7 @@ class PermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         // Daftar modul
-        $modules = ['posts', 'pages', 'categories'];
+        $modules = ['posts', 'pages', 'categories', 'media_manager'];
 
         // Daftar aksi CRUD
         $actions = ['view', 'create', 'edit', 'delete'];
