@@ -24,11 +24,6 @@ class Index extends Component
 
     protected $paginationTheme = 'tailwind';
 
-    public function mount()
-    {
-        $this->categories = Category::latest()->get();
-    }
-
     public function updatedName($value)
     {
         $this->slug = Str::slug($value);
@@ -42,6 +37,7 @@ class Index extends Component
 
     public function save()
     {
+        $this->authorize('create categories');
         $this->validate([
             'name' => [
                 'required',
@@ -67,6 +63,7 @@ class Index extends Component
 
     public function edit($id)
     {
+        $this->authorize('edit categories');
         $category = Category::findOrFail($id);
         $this->categoryId = $category->id;
         $this->name = $category->name;
@@ -76,6 +73,7 @@ class Index extends Component
 
     public function delete($id)
     {
+        $this->authorize('delete categories');
         $category = Category::findOrFail($id);
         $category->delete();
         $this->categories = Category::latest()->get();
@@ -90,7 +88,7 @@ class Index extends Component
 
     public function render()
     {
-
+        $this->authorize('view categories');
         $query = Category::query();
 
         if ($this->search) {

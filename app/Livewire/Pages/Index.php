@@ -58,6 +58,7 @@ class Index extends Component
 
     public function save()
     {
+        $this->authorize('create pages');
         $this->validate([
             'title' => 'required|string',
             'status' => 'required|in:active,inactive',
@@ -96,6 +97,7 @@ class Index extends Component
 
     public function edit($id)
     {
+        $this->authorize('edit pages');
         $page = Page::findOrFail($id);
         $this->pageId = $page->id;
         $this->title = $page->title;
@@ -107,6 +109,7 @@ class Index extends Component
 
     public function delete($id)
     {
+        $this->authorize('delete pages');
         $page = Page::findOrFail($id);
         $page->delete();
         session()->flash('message', 'Page successfully deleted.');
@@ -127,7 +130,7 @@ class Index extends Component
 
     public function render()
     {
-
+        $this->authorize('view pages');
         $query = Page::query();
 
         if ($this->search) {
