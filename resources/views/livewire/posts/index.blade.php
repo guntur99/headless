@@ -214,30 +214,59 @@
                                                     }}</span> @enderror
                                             </div>
 
-                                            <div x-data="{ imagePreview: null }">
-                                                <label class="block text-sm font-medium text-gray-700">Image</label>
-                                                <input type="file" wire:model="imageFile"
-                                                    @change="imagePreview = URL.createObjectURL($event.target.files[0])"
-                                                    class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
-                                                @error('imageFile') <span class="text-red-500 text-xs mt-1">{{ $message
-                                                    }}</span> @enderror
 
-                                                <div wire:loading wire:target="imageFile"
-                                                    class="text-sm text-gray-500 mt-2">Uploading...</div>
+                                            <div x-data="{
+                                            imageType: 'upload',
+                                            imagePreview: null,
+                                            resetImageInputs() {
+                                                this.imagePreview = null;
+                                                $wire.set('imageFile', null);
+                                                $wire.set('selectedImageFromMedia', '');
+                                            }
+                                            }" x-effect="resetImageInputs()">
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">Image Input</label>
+                                                <div class="flex items-center gap-4 mb-4">
+                                                    <label class="flex items-center gap-1">
+                                                        <input type="radio" value="upload" x-model="imageType" class="text-indigo-600 focus:ring-indigo-500">
+                                                        <span class="text-sm text-gray-700">Upload Image</span>
+                                                    </label>
+                                                    <label class="flex items-center gap-1">
+                                                        <input type="radio" value="media" x-model="imageType" class="text-indigo-600 focus:ring-indigo-500">
+                                                        <span class="text-sm text-gray-700">Select from Media Manager</span>
+                                                    </label>
+                                                </div>
 
+                                                <div x-show="imageType === 'upload'" class="mb-4">
+                                                    <input type="file" wire:model="imageFile"
+                                                        @change="imagePreview = URL.createObjectURL($event.target.files[0])"
+                                                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                                                    @error('imageFile') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                                    <div wire:loading wire:target="imageFile" class="text-sm text-gray-500 mt-2">Uploading...</div>
+                                                </div>
+
+                                                <div x-show="imageType === 'media'" class="mb-4">
+                                                    <select wire:model="selectedImageFromMedia"
+                                                        @change="imagePreview = $event.target.value"
+                                                        class="w-full border rounded-md shadow-sm focus:ring focus:ring-indigo-500 text-gray-700">
+                                                        <option value="">-- Select Images --</option>
+                                                        @foreach($mediaImages as $image)
+                                                            <option value="{{ $image->path }}">{{ basename($image->filename) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('selectedImageFromMedia') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                                </div>
+
+                                                <!-- Preview -->
                                                 <div class="mt-4">
                                                     <p class="text-sm font-medium text-gray-700 mb-2">Preview:</p>
                                                     <template x-if="imagePreview">
-                                                        <img :src="imagePreview"
-                                                            class="w-48 h-48 object-cover rounded-md shadow-sm">
+                                                        <img :src="imagePreview" class="w-48 h-48 object-cover rounded-md shadow-sm">
                                                     </template>
                                                     <template x-if="!imagePreview && '{{ $image }}'">
-                                                        <img src="{{ $image }}"
-                                                            class="w-48 h-48 object-cover rounded-md shadow-sm">
+                                                        <img src="{{ $image }}" class="w-48 h-48 object-cover rounded-md shadow-sm">
                                                     </template>
                                                     <template x-if="!imagePreview && !'{{ $image }}'">
-                                                        <div
-                                                            class="w-48 h-48 bg-gray-100 rounded-md flex items-center justify-center text-gray-400">
+                                                        <div class="w-48 h-48 bg-gray-100 rounded-md flex items-center justify-center text-gray-400">
                                                             No picture.
                                                         </div>
                                                     </template>
@@ -250,7 +279,7 @@
                         </div>
 
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
-                            @can(['create posts', 'edit posts'])
+                            @can('create posts')
                                 <button type="submit" wire:loading.attr="disabled"
                                     class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
                                     <span wire:loading.remove wire:target="save">Save</span>
@@ -266,5 +295,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>

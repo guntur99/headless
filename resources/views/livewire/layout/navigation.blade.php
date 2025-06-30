@@ -67,6 +67,13 @@ new class extends Component
                         </x-nav-link>
                     </div>
                 @endrole
+                @can('view media_manager')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('media-manager')" :active="request()->routeIs('media-manager')" wire:navigate>
+                            {{ __('Media Manager') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->
@@ -117,15 +124,34 @@ new class extends Component
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('posts')" :active="request()->routeIs('posts')" wire:navigate>
-                {{ __('Posts') }}
+            @can('view posts')
+                <x-responsive-nav-link :href="route('posts')" :active="request()->routeIs('posts')" wire:navigate>
+                    {{ __('Posts') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('view pages')
+                <x-responsive-nav-link :href="route('pages')" :active="request()->routeIs('pages')" wire:navigate>
+                    {{ __('Pages') }}
+                </x-responsive-nav-link>
+            @endcan
+            @can('view categories')
+                <x-responsive-nav-link :href="route('categories')" :active="request()->routeIs('categories')" wire:navigate>
+                    {{ __('Categories') }}
+                </x-responsive-nav-link>
+            @endcan
+            @role('Super Admin')
+                <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')" wire:navigate>
+                    {{ __('Users') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('roles')" :active="request()->routeIs('roles')" wire:navigate>
+                    {{ __('Roles') }}
+                </x-responsive-nav-link>
+            @endrole
+            @can('view media_manager')
+            <x-responsive-nav-link :href="route('media-manager')" :active="request()->routeIs('media-manager')" wire:navigate>
+                {{ __('Media Manager') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('pages')" :active="request()->routeIs('pages')" wire:navigate>
-                {{ __('Pages') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('categories')" :active="request()->routeIs('categories')" wire:navigate>
-                {{ __('Categories') }}
-            </x-responsive-nav-link>
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->

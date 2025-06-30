@@ -6,6 +6,7 @@ use App\Livewire\Categories\Index as CategoryIndex;
 use App\Livewire\Pages\Index as PageIndex;
 use App\Livewire\Users\Index as UserIndex;
 use App\Livewire\Roles\Index as RoleIndex;
+use App\Livewire\MediaManager\Index as MediaManagerIndex;
 use App\Livewire\Dashboard;
 
 Route::redirect('/', 'login');
@@ -17,6 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('categories', CategoryIndex::class)->name('categories');
     Route::get('users', UserIndex::class)->middleware(['role:Super Admin'])->name('users');
     Route::get('roles', RoleIndex::class)->middleware(['role:Super Admin'])->name('roles');
+    Route::get('media-manager', MediaManagerIndex::class)->name('media-manager');
 });
 
 Route::view('profile', 'profile')

@@ -138,7 +138,7 @@
                         </div>
 
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
-                            @can(['create categories', 'edit categories'])
+                            @can('create categories')
                                 <button type="submit" wire:loading.attr="disabled"
                                     class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
                                     <span wire:loading.remove wire:target="save">Save</span>
