@@ -13,16 +13,18 @@
 
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
                 <h2 class="text-3xl font-bold text-gray-800 mb-3 sm:mb-0">Pages Management</h2>
-                <button wire:click="showCreateModal"
-                    class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-800 focus:outline-none focus:border-indigo-800 focus:ring ring-indigo-300 disabled:opacity-25 transition ease-in-out duration-150">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Add Page
-                </button>
+                @can('create pages')
+                    <button wire:click="showCreateModal"
+                        class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-800 focus:outline-none focus:border-indigo-800 focus:ring ring-indigo-300 disabled:opacity-25 transition ease-in-out duration-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Add Page
+                    </button>
+                @endcan
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
@@ -76,11 +78,19 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <button wire:click="edit({{ $page->id }})"
-                                    class="font-medium text-indigo-600 hover:text-indigo-900 transition duration-150 ease-in-out">Edit</button>
-                                <button wire:click="delete({{ $page->id }})"
-                                    wire:confirm="Are you sure you want to delete this page?"
-                                    class="ml-4 font-medium text-red-600 hover:text-red-900 transition duration-150 ease-in-out">Delete</button>
+                                @can('edit pages')
+                                    <button wire:click="edit({{ $page->id }})"
+                                        class="font-medium text-indigo-600 hover:text-indigo-900 transition duration-150 ease-in-out">
+                                        Edit
+                                    </button>
+                                @endcan
+                                @can('delete pages')
+                                    <button wire:click="delete({{ $page->id }})"
+                                        wire:confirm="Are you sure you want to delete this page?"
+                                        class="ml-4 font-medium text-red-600 hover:text-red-900 transition duration-150 ease-in-out">
+                                        Delete
+                                    </button>
+                                @endcan
                             </td>
                         </tr>
                         @empty
@@ -177,11 +187,13 @@
                         </div>
 
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
-                            <button type="submit" wire:loading.attr="disabled"
-                                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
-                                <span wire:loading.remove wire:target="save">Save</span>
-                                <span wire:loading wire:target="save">Saving...</span>
-                            </button>
+                            @can(['create pages', 'edit pages'])
+                                <button type="submit" wire:loading.attr="disabled"
+                                    class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
+                                    <span wire:loading.remove wire:target="save">Save</span>
+                                    <span wire:loading wire:target="save">Saving...</span>
+                                </button>
+                            @endcan
                             <button type="button" @click="open = false"
                                 class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
                                 Cancel

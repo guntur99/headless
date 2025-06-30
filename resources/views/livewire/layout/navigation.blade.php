@@ -34,21 +34,39 @@ new class extends Component
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('posts')" :active="request()->routeIs('posts')" wire:navigate>
-                        {{ __('Posts') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('pages')" :active="request()->routeIs('pages')" wire:navigate>
-                        {{ __('Pages') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('categories')" :active="request()->routeIs('categories')" wire:navigate>
-                        {{ __('Categories') }}
-                    </x-nav-link>
-                </div>
+                @can('view posts')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('posts')" :active="request()->routeIs('posts')" wire:navigate>
+                            {{ __('Posts') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('view pages')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('pages')" :active="request()->routeIs('pages')" wire:navigate>
+                            {{ __('Pages') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('view categories')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('categories')" :active="request()->routeIs('categories')" wire:navigate>
+                            {{ __('Categories') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @role('Super Admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('users')" :active="request()->routeIs('users')" wire:navigate>
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('roles')" :active="request()->routeIs('roles')" wire:navigate>
+                            {{ __('Roles') }}
+                        </x-nav-link>
+                    </div>
+                @endrole
             </div>
 
             <!-- Settings Dropdown -->

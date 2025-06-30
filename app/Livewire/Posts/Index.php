@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Auth;
 
 class Index extends Component
 {
@@ -30,6 +31,7 @@ class Index extends Component
 
     public function mount()
     {
+        $this->authorize('view posts');
         $this->categories = Category::all();
     }
 
@@ -88,6 +90,7 @@ class Index extends Component
 
     public function save()
     {
+        $this->authorize('create posts');
         $this->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
@@ -142,6 +145,7 @@ class Index extends Component
 
     public function edit($id)
     {
+        $this->authorize('edit posts');
         $post = Post::with('categories')->findOrFail($id);
         $this->postId = $post->id;
         $this->title = $post->title;
@@ -158,6 +162,7 @@ class Index extends Component
 
     public function delete($id)
     {
+        $this->authorize('delete posts');
         $post = Post::findOrFail($id);
 
         if ($post->image) {
