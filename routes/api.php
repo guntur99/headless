@@ -20,12 +20,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('pages', PageController::class);
     Route::get('/page/id/{uuid}', [PageController::class, 'showById']);
 
-    Route::post('/logout', function (Request $request) {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json([
-            'message' => 'Logged out successfully',
-        ]);
-    });
+    Route::post('logout', [AuthController::class, 'logout']);
+
 });
 
 Route::get('/user', function (Request $request) {

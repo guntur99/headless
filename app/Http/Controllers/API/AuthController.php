@@ -47,4 +47,10 @@ class AuthController extends BaseController
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
         }
     }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+        return response()->json(['message' => 'Logged out successfully']);
+    }
 }
