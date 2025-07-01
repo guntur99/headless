@@ -46,6 +46,15 @@ This project is designed with **multi-language support**, **role-based access**,
 
 ---
 
+## Links:
+
+🔗 API Documentation
+https://documenter.getpostman.com/view/36920255/2sB34ZrQNr#51a33950-c147-4b17-bcde-f73db3de2635
+
+🎥 Video Explanation
+
+---
+
 ## ⚙️ Installation & Local Development
 
 ```bash
