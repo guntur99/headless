@@ -4,7 +4,7 @@
         @if (session()->has('message'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)"
             class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <strong class="font-bold">Successfully!</strong>
+            <strong class="font-bold">{{ __('Successfully!') }}</strong>
             <span class="block sm:inline">{{ session('message') }}</span>
         </div>
         @endif
@@ -12,7 +12,7 @@
         <div class="bg-white p-6 rounded-lg shadow-lg">
 
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                <h2 class="text-3xl font-bold text-gray-800 mb-3 sm:mb-0">Posts Management</h2>
+                <h2 class="text-3xl font-bold text-gray-800 mb-3 sm:mb-0">{{ __('Posts Management') }}</h2>
                 @can('create posts')
                     <button wire:click="showCreateModal"
                         class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-800 focus:outline-none focus:border-indigo-800 focus:ring ring-indigo-300 disabled:opacity-25 transition ease-in-out duration-150">
@@ -21,20 +21,20 @@
                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
                                 clip-rule="evenodd" />
                         </svg>
-                        Add Post
+                        {{ __('Add Post') }}
                     </button>
                 @endcan
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <input wire:model.live.debounce.300ms="search" type="text" placeholder="Search title or content"
+                <input wire:model.live.debounce.300ms="search" type="text" placeholder="{{ __('Search title or content') }}"
                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-900">
 
                 <select wire:model.live="statusFilter"
                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-900">
-                    <option value="">All Status</option>
-                    <option value="draft">Draft</option>
-                    <option value="published">Published</option>
+                    <option value="">{{ __('All Status') }}</option>
+                    <option value="draft">{{ __('Draft') }}</option>
+                    <option value="published">{{ __('Published') }}</option>
                 </select>
             </div>
 
@@ -42,25 +42,25 @@
                 <table class="w-full text-sm text-left text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                         <tr>
-                            <th scope="col" class="px-6 py-3 w-32">Image</th>
+                            <th scope="col" class="px-6 py-3 w-32">{{ __('Image') }}</th>
                             <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('title')">
                                 <div class="flex items-center">
-                                    Title
+                                    {{ __('Title') }}
                                     @if($sortField === 'title')
                                     <span class="ml-1">{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
                                     @endif
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">Category</th>
+                            <th scope="col" class="px-6 py-3">{{ __('Category') }}</th>
                             <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('status')">
                                 <div class="flex items-center">
-                                    Status
+                                    {{ __('Status') }}
                                     @if($sortField === 'status')
                                     <span class="ml-1">{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
                                     @endif
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3 text-center">Action</th>
+                            <th scope="col" class="px-6 py-3 text-center">{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody wire:loading.class.delay="opacity-50">
@@ -94,14 +94,14 @@
                                 @can('edit posts')
                                 <button wire:click="edit({{ $post->id }})"
                                     class="font-medium text-indigo-600 hover:text-indigo-900 transition duration-150 ease-in-out">
-                                    Edit
+                                    {{ __('Edit') }}
                                 </button>
                                 @endcan
                                 @can('delete posts')
                                 <button wire:click="delete({{ $post->id }})"
                                     wire:confirm="Are you sure you want to delete this post?"
                                     class="ml-4 font-medium text-red-600 hover:text-red-900 transition duration-150 ease-in-out">
-                                    Delete
+                                    {{ __('Delete') }}
                                 </button>
                                 @endcan
                             </td>
@@ -109,7 +109,7 @@
                         @empty
                         <tr>
                             <td colspan="5" class="text-center py-10 text-gray-500">
-                                No post data found.
+                                {{ __('No post data found.') }}
                             </td>
                         </tr>
                         @endforelse
@@ -149,7 +149,7 @@
                                         <div class="space-y-4">
                                             <div>
                                                 <label for="title"
-                                                    class="block text-sm font-medium text-gray-700">Title</label>
+                                                    class="block text-sm font-medium text-gray-700">{{ __('Title') }}</label>
                                                 <input type="text" wire:model.live="title" id="title"
                                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900">
                                                 @error('title') <span class="text-red-500 text-xs mt-1">{{ $message
@@ -158,7 +158,7 @@
 
                                             <div>
                                                 <label for="slug" class="block text-sm font-medium text-gray-700">Slug
-                                                    (Automatic)</label>
+                                                    {{ __('(Automatic)') }}</label>
                                                 <input type="text" wire:model="slug" id="slug"
                                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 text-gray-900"
                                                     readonly>
@@ -168,7 +168,7 @@
 
                                             <div>
                                                 <label for="excerpt"
-                                                    class="block text-sm font-medium text-gray-700">Excerpt</label>
+                                                    class="block text-sm font-medium text-gray-700">{{ __('Excerpt') }}</label>
                                                 <textarea wire:model.defer="excerpt" id="excerpt" rows="3"
                                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900"></textarea>
                                                 @error('excerpt') <span class="text-red-500 text-xs mt-1">{{ $message
@@ -177,7 +177,7 @@
 
                                             <div>
                                                 <label for="content"
-                                                    class="block text-sm font-medium text-gray-700">Content</label>
+                                                    class="block text-sm font-medium text-gray-700">{{ __('Content') }}</label>
                                                 <textarea wire:model.defer="content" id="content" rows="6"
                                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900"></textarea>
                                                 @error('content') <span class="text-red-500 text-xs mt-1">{{ $message
@@ -188,7 +188,7 @@
                                         <div class="space-y-4">
                                             <div>
                                                 <label for="categories"
-                                                    class="block text-sm font-medium text-gray-700">Category</label>
+                                                    class="block text-sm font-medium text-gray-700">{{ __('Category') }}</label>
                                                 <select wire:model="selectedCategories" id="categories" multiple
                                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900"
                                                     style="height: 120px;">
@@ -196,19 +196,19 @@
                                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
-                                                <p class="text-xs text-gray-500 mt-1">Use Ctrl/Cmd + click to select more
-                                                    than one.</p>
+                                                <p class="text-xs text-gray-500 mt-1">{{ __('Use Ctrl/Cmd + click to select more
+                                                than one.') }}</p>
                                                 @error('selectedCategories') <span class="text-red-500 text-xs mt-1">{{
                                                     $message }}</span> @enderror
                                             </div>
 
                                             <div>
                                                 <label for="status"
-                                                    class="block text-sm font-medium text-gray-700">Status</label>
+                                                    class="block text-sm font-medium text-gray-700">{{ __('Status') }}</label>
                                                 <select wire:model.defer="status" id="status"
                                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900">
-                                                    <option value="draft">Draft</option>
-                                                    <option value="published">Published</option>
+                                                    <option value="draft">{{ __('Draft') }}</option>
+                                                    <option value="published">{{ __('Published') }}</option>
                                                 </select>
                                                 @error('status') <span class="text-red-500 text-xs mt-1">{{ $message
                                                     }}</span> @enderror
@@ -224,15 +224,15 @@
                                                 $wire.set('selectedImageFromMedia', '');
                                             }
                                             }" x-effect="resetImageInputs()">
-                                                <label class="block text-sm font-medium text-gray-700 mb-1">Image Input</label>
+                                                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Image Input') }}</label>
                                                 <div class="flex items-center gap-4 mb-4">
                                                     <label class="flex items-center gap-1">
                                                         <input type="radio" value="upload" x-model="imageType" class="text-indigo-600 focus:ring-indigo-500">
-                                                        <span class="text-sm text-gray-700">Upload Image</span>
+                                                        <span class="text-sm text-gray-700">{{ __('Upload Image') }}</span>
                                                     </label>
                                                     <label class="flex items-center gap-1">
                                                         <input type="radio" value="media" x-model="imageType" class="text-indigo-600 focus:ring-indigo-500">
-                                                        <span class="text-sm text-gray-700">Select from Media Manager</span>
+                                                        <span class="text-sm text-gray-700">{{ __('Select from Media Manager') }}</span>
                                                     </label>
                                                 </div>
 
@@ -241,14 +241,14 @@
                                                         @change="imagePreview = URL.createObjectURL($event.target.files[0])"
                                                         class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                                                     @error('imageFile') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
-                                                    <div wire:loading wire:target="imageFile" class="text-sm text-gray-500 mt-2">Uploading...</div>
+                                                    <div wire:loading wire:target="imageFile" class="text-sm text-gray-500 mt-2">{{ __('Uploading') }}...</div>
                                                 </div>
 
                                                 <div x-show="imageType === 'media'" class="mb-4">
                                                     <select wire:model="selectedImageFromMedia"
                                                         @change="imagePreview = $event.target.value"
                                                         class="w-full border rounded-md shadow-sm focus:ring focus:ring-indigo-500 text-gray-700">
-                                                        <option value="">-- Select Images --</option>
+                                                        <option value="">-- {{ __('Select Images') }} --</option>
                                                         @foreach($mediaImages as $image)
                                                             <option value="{{ $image->path }}">{{ basename($image->filename) }}</option>
                                                         @endforeach
@@ -258,7 +258,7 @@
 
                                                 <!-- Preview -->
                                                 <div class="mt-4">
-                                                    <p class="text-sm font-medium text-gray-700 mb-2">Preview:</p>
+                                                    <p class="text-sm font-medium text-gray-700 mb-2">{{ __('Preview') }}:</p>
                                                     <template x-if="imagePreview">
                                                         <img :src="imagePreview" class="w-48 h-48 object-cover rounded-md shadow-sm">
                                                     </template>
@@ -267,7 +267,7 @@
                                                     </template>
                                                     <template x-if="!imagePreview && !'{{ $image }}'">
                                                         <div class="w-48 h-48 bg-gray-100 rounded-md flex items-center justify-center text-gray-400">
-                                                            No picture.
+                                                            {{ __('No picture.') }}
                                                         </div>
                                                     </template>
                                                 </div>
@@ -282,13 +282,13 @@
                             @can('create posts')
                                 <button type="submit" wire:loading.attr="disabled"
                                     class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
-                                    <span wire:loading.remove wire:target="save">Save</span>
-                                    <span wire:loading wire:target="save">Saving...</span>
+                                    <span wire:loading.remove wire:target="save">{{ __('Save') }}</span>
+                                    <span wire:loading wire:target="save">{{ __('Saving') }}...</span>
                                 </button>
                             @endcan
                             <button type="button" @click="open = false"
                                 class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
-                                Cancel
+                                {{ __('Cancel') }}
                             </button>
                         </div>
                     </form>
