@@ -52,9 +52,6 @@
                         <tr class="bg-white border-b hover:bg-gray-50">
                             <td class="px-6 py-4 font-medium text-gray-900">
                                 {{ $category->name }}
-                                <div class="text-xs text-gray-500 mt-1">
-                                    Slug: {{ $category->slug }}
-                                </div>
                             </td>
                             <td class="px-6 py-4 text-center">
                                 @can('edit categories')

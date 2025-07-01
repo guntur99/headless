@@ -30,9 +30,6 @@
                     <li class="py-2">
                         <div class="flex justify-between items-center">
                             <span class="font-medium text-gray-800 text-dark">{{ $post->title }}
-                                <div class="text-xs text-gray-500 mt-1">
-                                    Slug: {{ $post->slug }}
-                                </div>
                             </span>
                             <span class="text-sm text-gray-500">{{ $post->created_at->diffForHumans() }}</span>
                         </div>

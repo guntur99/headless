@@ -72,9 +72,6 @@
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900">
                                 {{ $post->title }}
-                                <div class="text-xs text-gray-500 mt-1">
-                                    Slug: {{ $post->slug }}
-                                </div>
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-wrap gap-1">
@@ -176,12 +173,31 @@
                                             </div>
 
                                             <div>
-                                                <label for="content"
-                                                    class="block text-sm font-medium text-gray-700">{{ __('Content') }}</label>
-                                                <textarea wire:model.defer="content" id="content" rows="6"
-                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900"></textarea>
-                                                @error('content') <span class="text-red-500 text-xs mt-1">{{ $message
-                                                    }}</span> @enderror
+                                                <div class="mt-2" wire:ignore x-data="{
+                                                    value: @entangle('content'),
+                                                    isFocused: false,
+                                                    init() {
+                                                        let trixEditor = this.$refs.trix;
+
+                                                        this.$watch('value', (newValue) => {
+                                                            if (newValue !== trixEditor.editor.getDocument().toString()) {
+                                                                trixEditor.editor.loadHTML(newValue);
+                                                            }
+                                                        });
+                                                    }
+                                                }" x-on:focusin="isFocused = true" x-on:focusout="isFocused = false">
+                                                    <label for="content" class="block text-sm font-medium text-gray-700">{{ __('Content') }}</label>
+                                                    <input x-model="value" id="content" type="hidden">
+                                                    <trix-editor x-ref="trix" input="content" x-on:trix-change="value = $event.target.value"
+                                                        :class="{ 'border-indigo-300 ring ring-indigo-200 ring-opacity-50': isFocused }"
+                                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                                    </trix-editor>
+                                                </div>
+
+
+                                                @error('content')
+                                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                                @enderror
                                             </div>
                                         </div>
 

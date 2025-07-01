@@ -67,9 +67,6 @@
                         <tr class="bg-white border-b hover:bg-gray-50">
                             <td class="px-6 py-4 font-medium text-gray-900">
                                 {{ $page->title }}
-                                <div class="text-xs text-gray-500 mt-1">
-                                    Slug: {{ $page->slug }}
-                                </div>
                             </td>
                             <td class="px-6 py-4">
                                 <span
@@ -176,14 +173,29 @@
                                     </div>
 
                                     <div class="mt-5 grid grid-cols-1 md:grid-cols-1 gap-6">
-                                        <div>
-                                            <label for="body"
-                                                class="block text-sm font-medium text-gray-700">{{ __('Body') }}</label>
-                                            <textarea wire:model.defer="body" id="body" rows="6"
-                                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900"></textarea>
-                                            @error('body') <span class="text-red-500 text-xs mt-1">{{ $message
-                                                }}</span> @enderror
+
+                                        <div class="mt-2" wire:ignore x-data="{
+                                                value: @entangle('body'),
+                                                isFocused: false,
+                                                init() {
+                                                    let trixEditor = this.$refs.trix;
+
+                                                    this.$watch('value', (newValue) => {
+                                                        if (newValue !== trixEditor.editor.getDocument().toString()) {
+                                                            trixEditor.editor.loadHTML(newValue);
+                                                        }
+                                                    });
+                                                }
+                                            }" x-on:focusin="isFocused = true" x-on:focusout="isFocused = false">
+                                            <label for="body" class="block text-sm font-medium text-gray-700">{{ __('Body') }}</label>
+                                            <input x-model="value" id="body" type="hidden">
+                                            <trix-editor x-ref="trix" input="body" x-on:trix-change="value = $event.target.value"
+                                                :class="{ 'border-indigo-300 ring ring-indigo-200 ring-opacity-50': isFocused }"
+                                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                                            </trix-editor>
                                         </div>
+
+                                        @error('body') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                                     </div>
 
                                 </div>
