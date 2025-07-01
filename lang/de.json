@@ -329,5 +329,6 @@
     "All Permissions": "Alle Berechtigungen",
     "No permissions assigned": "Keine Berechtigungen zugewiesen",
     "No role data found.": "Keine Rollendaten gefunden.",
-    "Role Name": "Rollenname"
+    "Role Name": "Rollenname",
+    "Don't have an account?": "Noch kein Konto?"
 }

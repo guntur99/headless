@@ -10,13 +10,7 @@ use App\Livewire\MediaManager\Index as MediaManagerIndex;
 use App\Livewire\Dashboard;
 
 Route::redirect('/', 'login');
-// Route::get('/lang/{locale}', function ($locale) {
-//     if (in_array($locale, ['en', 'id', 'de'])) {
-//         session(['locale' => $locale]);
-//     }
 
-//     return redirect()->back();
-// });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
     Route::get('posts', PostIndex::class)->name('posts');
