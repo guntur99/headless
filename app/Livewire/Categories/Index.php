@@ -93,7 +93,7 @@ class Index extends Component
 
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%');
+                $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
             });
         }
 

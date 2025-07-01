@@ -57,7 +57,7 @@ class Index extends Component
         $query = Role::with('permissions');
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where('name', 'like', '%' . $this->search . '%');
+                $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($this->search) . '%']);
             });
         }
         $roles = $query->orderBy($this->sortField, $this->sortDirection)->paginate(5);

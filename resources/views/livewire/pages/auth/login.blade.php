@@ -77,7 +77,7 @@ new #[Layout('layouts.guest')] class extends Component
                     {{ __("Don't have an account?") }}
                 </a>
 
-                <x-primary-button class="ms-0 sm:ms-3">
+                <x-primary-button class="ms-0 sm:ms-3 flex items-center justify-center">
                     {{ __('Log in') }}
                 </x-primary-button>
             </div>

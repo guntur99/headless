@@ -50,7 +50,7 @@ class CategoryController extends Controller
     public function searchByName(string $keyword)
     {
         return Post::with('categories')
-            ->where('title', 'ILIKE', "%{$keyword}%")
+            ->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%']);
             ->latest()
             ->paginate(10);
     }

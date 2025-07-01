@@ -22,7 +22,7 @@ class PostRepository implements PostRepositoryInterface
     public function searchByName($keyword)
     {
         return Post::when($keyword, function($query) use($keyword) {
-                $query->where('title', 'ILIKE', "%{$keyword}%");
+                $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%'])
             })
             ->latest()
             ->paginate(10);

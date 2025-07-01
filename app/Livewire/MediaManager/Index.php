@@ -52,7 +52,7 @@ class Index extends Component
 
         if ($this->imageFile) {
             if ($this->imageId && $this->path) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', $this->image));
+                Storage::disk('public')->delete(str_replace('/storage/', '', $this->path));
             }
             $path = $this->imageFile->store('media', 'public');
             $imageUrl = Storage::disk('public')->url($path);
@@ -114,7 +114,7 @@ class Index extends Component
 
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where('filename', 'like', '%' . $this->search . '%');
+                $q->whereRaw('LOWER(filename) LIKE ?', ['%' . strtolower($this->search) . '%']);
             });
         }
 

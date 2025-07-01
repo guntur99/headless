@@ -17,7 +17,7 @@ class PageRepository implements PageRepositoryInterface
     public function searchByName($keyword)
     {
         return Page::when($keyword, function($query) use($keyword) {
-                $query->where('title', 'ILIKE', "%{$keyword}%");
+                $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%']);
             })
             ->latest()
             ->paginate(10);

@@ -135,8 +135,8 @@ class Index extends Component
 
         if ($this->search) {
             $query->where(function ($q) {
-                $q->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('body', 'like', '%' . $this->search . '%');
+                $q->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($this->search) . '%'])
+                    ->orWhereRaw('LOWER(body) LIKE ?', ['%' . strtolower($this->search) . '%']);
             });
         }
 

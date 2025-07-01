@@ -76,9 +76,7 @@ new class extends Component
                 @endcan
             </div>
 
-            <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-
                 <div class="me-4">
                     <x-dropdown align="right" width="50">
                         <x-slot name="trigger">

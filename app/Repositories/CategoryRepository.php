@@ -21,7 +21,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function searchByName($keyword)
     {
         return Category::when($keyword, function($query) use($keyword) {
-                $query->where('name', 'ILIKE', "%{$keyword}%");
+                $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%']);
             })
             ->latest()
             ->paginate(10);

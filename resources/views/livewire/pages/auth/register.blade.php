@@ -93,7 +93,7 @@ new #[Layout('layouts.guest')] class extends Component
                     {{ __('Already registered?') }}
                 </a>
 
-                <x-primary-button class="ms-0 sm:ms-3">
+                <x-primary-button class="ms-0 sm:ms-3 flex items-center justify-center">
                     {{ __('Register') }}
                 </x-primary-button>
             </div>
