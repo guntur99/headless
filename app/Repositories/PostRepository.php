@@ -9,20 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PostRepository implements PostRepositoryInterface
 {
-    public function all()
+    public function all($keyword)
     {
-        return Post::with('categories')->latest()->paginate(10);
-    }
-
-    public function find(Post $post)
-    {
-        return $post->load('categories');
-    }
-
-    public function searchByName($keyword)
-    {
-        return Post::when($keyword, function($query) use($keyword) {
-                $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%'])
+        return Post::with('categories')
+            ->when($keyword, function($query) use($keyword) {
+                $query->whereRaw('LOWER(title) ILIKE ?', ['%' . strtolower($keyword) . '%']);
             })
             ->latest()
             ->paginate(10);

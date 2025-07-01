@@ -7,8 +7,7 @@ use App\Models\Page;
 
 interface PageRepositoryInterface
 {
-    public function all();
-    public function searchByName($keyword);
+    public function all($keyword);
     public function findById(string $uuid);
     public function create(array $data);
     public function update(string $uuid, array $data);

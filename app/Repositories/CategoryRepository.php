@@ -8,17 +8,7 @@ use App\Repositories\Interfaces\CategoryRepositoryInterface;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
-    public function all()
-    {
-        return Category::latest()->paginate(10);
-    }
-
-    public function find(Category $category)
-    {
-        return $category;
-    }
-
-    public function searchByName($keyword)
+    public function all($keyword)
     {
         return Category::when($keyword, function($query) use($keyword) {
                 $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($keyword) . '%']);

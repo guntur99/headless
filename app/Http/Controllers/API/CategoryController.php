@@ -16,9 +16,9 @@ class CategoryController extends Controller
         $this->categoryRepo = $categoryRepo;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->categoryRepo->all();
+        return $this->categoryRepo->all($request->input('query'));
     }
 
     public function store(Request $request)
@@ -31,28 +31,9 @@ class CategoryController extends Controller
         return response()->json($this->categoryRepo->create($data), 201);
     }
 
-    public function show(Category $category)
-    {
-        return $this->categoryRepo->show($category);
-    }
-
-    public function search(Request $request)
-    {
-        $keyword = $request->get('query', '');
-        return $this->categoryRepo->searchByName($keyword);
-    }
-
     public function showById($uuid)
     {
         return $this->categoryRepo->findById($uuid);
-    }
-
-    public function searchByName(string $keyword)
-    {
-        return Post::with('categories')
-            ->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%']);
-            ->latest()
-            ->paginate(10);
     }
 
     public function findById(int $id)

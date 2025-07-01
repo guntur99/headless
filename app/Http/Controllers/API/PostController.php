@@ -16,9 +16,9 @@ class PostController extends Controller
         $this->postRepo = $postRepo;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->postRepo->all();
+        return $this->postRepo->all($request->input('query'));
     }
 
     public function store(Request $request)
@@ -33,17 +33,6 @@ class PostController extends Controller
         ]);
 
         return response()->json($this->postRepo->create($data), 201);
-    }
-
-    public function show(Post $post)
-    {
-        return $this->postRepo->find($post);
-    }
-
-    public function search(Request $request)
-    {
-        $keyword = $request->get('query', '');
-        return $this->postRepo->searchByName($keyword);
     }
 
     public function showById($id)

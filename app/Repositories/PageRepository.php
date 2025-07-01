@@ -9,12 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PageRepository implements PageRepositoryInterface
 {
-    public function all()
-    {
-        return Page::latest()->paginate(10);
-    }
-
-    public function searchByName($keyword)
+    public function all($keyword)
     {
         return Page::when($keyword, function($query) use($keyword) {
                 $query->whereRaw('LOWER(title) LIKE ?', ['%' . strtolower($keyword) . '%']);

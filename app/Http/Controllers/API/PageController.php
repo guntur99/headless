@@ -17,9 +17,9 @@ class PageController extends Controller
         $this->pageRepo = $pageRepo;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->pageRepo->all();
+        return $this->pageRepo->all($request->input('query'));
     }
 
     public function store(Request $request)
@@ -31,17 +31,6 @@ class PageController extends Controller
         ]);
 
         return response()->json($this->pageRepo->create($data), 201);
-    }
-
-    public function show(Post $post)
-    {
-        return $this->pageRepo->find($post);
-    }
-
-    public function search(Request $request)
-    {
-        $keyword = $request->get('query', '');
-        return $this->pageRepo->searchByName($keyword);
     }
 
     public function showById($id)
