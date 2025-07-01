@@ -17,15 +17,15 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
-        // $middleware->alias([
-        //     'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
-        //     'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
-        //     'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
-        // ]);
+        $middleware->append([
+            \Illuminate\Session\Middleware\StartSession::class,
+            \App\Http\Middleware\SetLocale::class
+        ]);
 
         // $middleware->api(prepend: [
         //     \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         // ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

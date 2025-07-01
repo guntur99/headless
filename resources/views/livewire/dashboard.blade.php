@@ -6,17 +6,17 @@
             <div class="grid auto-rows-min gap-4 md:grid-cols-3">
                 <div
                     class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700 p-4">
-                    <h2 class="text-lg font-semibold">Total Posts</h2>
+                    <h2 class="text-lg font-semibold">{{ __('Total Posts') }}</h2>
                     <p class="mt-5 text-8xl font-bold text-blue-600">{{ $totalPosts }}</p>
                 </div>
                 <div
                     class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700 p-4">
-                    <h2 class="text-lg font-semibold">Total Categories</h2>
+                    <h2 class="text-lg font-semibold">{{ __('Total Categories') }}</h2>
                     <p class="mt-5 text-8xl font-bold text-green-600">{{ $totalCategories }}</p>
                 </div>
                 <div
                     class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700 p-4">
-                    <h2 class="text-lg font-semibold">Total Pages</h2>
+                    <h2 class="text-lg font-semibold">{{ __('Total Pages') }}</h2>
                     <p class="mt-5 text-8xl font-bold text-purple-600">{{ $totalPages }}</p>
                 </div>
             </div>
@@ -24,7 +24,7 @@
             {{-- Recent Posts --}}
             <div
                 class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700 p-4 mt-4">
-                <h2 class="text-lg font-semibold mb-4">10 Latest Posts</h2>
+                <h2 class="text-lg font-semibold mb-4">10 {{ __('Latest Posts') }}</h2>
                 <ul class="divide-y divide-gray-200 dark:divide-neutral-700">
                     @forelse($recentPosts as $post)
                     <li class="py-2">

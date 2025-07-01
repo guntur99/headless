@@ -4,7 +4,7 @@
         @if (session()->has('message'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)"
             class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <strong class="font-bold">Successfully!</strong>
+            <strong class="font-bold">{{ __('Successfully!') }}</strong>
             <span class="block sm:inline">{{ session('message') }}</span>
         </div>
         @endif
@@ -12,11 +12,11 @@
         <div class="bg-white p-6 rounded-lg shadow-lg">
 
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                <h2 class="text-3xl font-bold text-gray-800 mb-3 sm:mb-0">Users Management</h2>
+                <h2 class="text-3xl font-bold text-gray-800 mb-3 sm:mb-0">{{ __('Users Management') }}</h2>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <input wire:model.live.debounce.300ms="search" type="text" placeholder="Search title or content"
+                <input wire:model.live.debounce.300ms="search" type="text" placeholder="{{ __('Users Management') }}"
                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-900">
             </div>
 
@@ -26,15 +26,15 @@
                         <tr>
                             <th scope="col" class="px-6 py-3 cursor-pointer" wire:click="sortBy('name')">
                                 <div class="flex items-center">
-                                    Name
+                                    {{ __('Name') }}
                                     @if($sortField === 'name')
                                     <span class="ml-1">{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
                                     @endif
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">Email</th>
-                            <th scope="col" class="px-6 py-3">Role</th>
-                            <th scope="col" class="px-6 py-3 text-center">Action</th>
+                            <th scope="col" class="px-6 py-3">{{ __('Email') }}</th>
+                            <th scope="col" class="px-6 py-3">{{ __('Role') }}</th>
+                            <th scope="col" class="px-6 py-3 text-center">{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody wire:loading.class.delay="opacity-50">
@@ -62,12 +62,12 @@
                                 @if (auth()->user()->name !== $user->name)
                                     <button wire:click="edit({{ $user->id }})"
                                         class="font-medium text-indigo-600 hover:text-indigo-900 transition duration-150 ease-in-out">
-                                        Manage Roles
+                                        {{ __('Manage Roles') }}
                                     </button>
                                 @else
                                 <span
                                 class="px-2 inline-flex text-xs leading-5 font-bold rounded-full  bg-red-100 text-red-500">
-                                        This is you
+                                    {{ __('This is you') }}
                                 </span>
                                 @endif
                             </td>
@@ -75,7 +75,7 @@
                         @empty
                         <tr>
                             <td colspan="5" class="text-center py-10 text-gray-500">
-                                No user data found.
+                                {{ __('No user data found.') }}
                             </td>
                         </tr>
                         @endforelse
@@ -110,7 +110,7 @@
                             <div class="sm:flex sm:items-start">
                                 <div class="w-full">
                                     <h3 class="text-xl leading-6 font-bold text-gray-900 mb-6" id="modal-title">
-                                        Manage Roles for {{ $selectedUser->name }}
+                                        {{ __('Manage Roles for') }} {{ $selectedUser->name }}
                                     </h3>
 
                                     <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
@@ -134,7 +134,7 @@
                                                     $('#role-select').val(null).trigger('change');
                                                 });
                                                                     ">
-                                            <option value=""></option> {{-- Opsi kosong untuk placeholder/clear --}}
+                                            <option value=""></option>
                                             @foreach($allRoles as $role)
                                             <option value="{{ $role->name }}">{{ $role->name }}</option>
                                             @endforeach
@@ -148,12 +148,12 @@
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse gap-2">
                             <button type="submit" wire:loading.attr="disabled"
                                 class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
-                                <span wire:loading.remove wire:target="save">Save</span>
-                                <span wire:loading wire:target="save">Saving...</span>
+                                <span wire:loading.remove wire:target="save">{{ __('Save') }}</span>
+                                <span wire:loading wire:target="save">{{ __('Saving') }}...</span>
                             </button>
                             <button type="button" @click="open = false"
                                 class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
-                                Cancel
+                                {{ __('Cancel') }}
                             </button>
                         </div>
                     </form>
