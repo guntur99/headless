@@ -19,6 +19,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/category/id/{uuid}', [CategoryController::class, 'showById']);
     Route::apiResource('pages', PageController::class);
     Route::get('/page/id/{uuid}', [PageController::class, 'showById']);
+
+    Route::post('/logout', function (Request $request) {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Logged out successfully',
+        ]);
+    });
 });
 
 Route::get('/user', function (Request $request) {
