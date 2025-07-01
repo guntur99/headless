@@ -46,12 +46,24 @@ This project is designed with **multi-language support**, **role-based access**,
 
 ---
 
-## Links:
+## 🔗 Links:
 
 🔗 API Documentation
-https://documenter.getpostman.com/view/36920255/2sB34ZrQNr#51a33950-c147-4b17-bcde-f73db3de2635
+- https://documenter.getpostman.com/view/36920255/2sB34ZrQNr#51a33950-c147-4b17-bcde-f73db3de2635
 
 🎥 Video Explanation
+- https://youtu.be/xRegT_gtZf8
+
+🔗 Live Website
+- https://headless-cms-green-cstalo.laravel.cloud
+
+## 🗝️ Credentials:
+- Superadmin
+  - Email: superadmin@headless.com
+  - Password: password
+- Admin / Register New User then set role for the user or just use an account below
+  - Email: kenzy@headless.com
+  - Password: password
 
 ---
 
